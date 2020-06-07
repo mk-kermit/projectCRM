@@ -1,13 +1,16 @@
-package pl.coderslab.crmproject.home;
+package pl.coderslab.crmproject.login;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
-public class HomeController {
+public class LoginController {
     @GetMapping("/")
     public String home() {
-        return "home";
+        return "login";
     }
+
+    @GetMapping("/login")
+    public String login() {return "login";}
+
 }
