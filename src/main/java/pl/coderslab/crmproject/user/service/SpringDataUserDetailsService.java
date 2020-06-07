@@ -9,6 +9,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import pl.coderslab.crmproject.user.domain.CurrentUser;
 import pl.coderslab.crmproject.user.domain.User;
 
+import javax.transaction.Transactional;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -21,6 +22,7 @@ public class SpringDataUserDetailsService implements UserDetailsService {
     }
 
     @Override
+    @Transactional
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         User user = userService.findByUserName(username);
         if (user == null){

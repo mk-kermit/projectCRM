@@ -2,6 +2,7 @@ package pl.coderslab.crmproject.user.service;
 
 import lombok.AllArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.stereotype.Service;
 import pl.coderslab.crmproject.role.Role;
 import pl.coderslab.crmproject.role.RoleRepository;
 import pl.coderslab.crmproject.user.domain.User;
@@ -11,6 +12,7 @@ import java.util.Arrays;
 import java.util.HashSet;
 
 @AllArgsConstructor
+@Service
 public class UserServiceImpl implements UserService{
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
