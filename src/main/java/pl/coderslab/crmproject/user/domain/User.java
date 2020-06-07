@@ -1,19 +1,21 @@
 package pl.coderslab.crmproject.user.domain;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import pl.coderslab.crmproject.role.Role;
 
 import javax.persistence.*;
 import java.util.Set;
 
-@AllArgsConstructor
 @Getter
 @Setter
+@AllArgsConstructor
+@NoArgsConstructor
+@Entity
+@Table(name = "users")
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "user_id")
     private Long id;
     @Column(nullable = false, unique = true, length = 60)
     private String username;
