@@ -4,25 +4,6 @@
 <head>
     <title>Login page</title>
     <link rel="stylesheet" href="css/bootstrap.min.css">
-    <script type="text/javascript">
-        function validate() {
-            if (document.f.username.value == "" && document.f.password.value == "") {
-                alert("Login i hasło wymagane");
-                document.f.username.focus();
-                return false;
-            }
-            if (document.f.username.value == "") {
-                alert("Login wymagany");
-                document.f.username.focus();
-                return false;
-            }
-            if (document.f.password.value == "") {
-                alert("Hasło wymagane");
-                document.f.password.focus();
-                return false;
-            }
-        }
-    </script>
 </head>
 <body>
 <div class="container">
