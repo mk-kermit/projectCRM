@@ -10,13 +10,12 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import pl.coderslab.crmproject.user.service.SpringDataUserDetailsService;
 
-import javax.sql.DataSource;
-
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
+
     @Override
-    protected void configure(AuthenticationManagerBuilder builder)throws Exception{
+    protected void configure(AuthenticationManagerBuilder builder) throws Exception {
         builder.userDetailsService(customUserDetailsService()).passwordEncoder(passwordEncoder());
     }
 
@@ -25,18 +24,25 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests()
                 .antMatchers("/", "/login").permitAll()
                 .antMatchers("/loged/**").hasAnyRole("USER", "ADMIN")
-                .antMatchers("/admin/**").hasAnyAuthority("ADMIN")
+                .antMatchers("/admin/**").hasRole("ADMIN")
                 .and()
-                    .formLogin()
-                    .loginPage("/login")
-                    .failureUrl("/403")
-                    .defaultSuccessUrl("/loged/mainboard")
+                .formLogin()
+                .loginPage("/login")
+                .usernameParameter("username")
+                .passwordParameter("password")
+                .defaultSuccessUrl("/loged")
                 .and()
-                    .logout()
-                    .logoutSuccessUrl("/")
-                    .permitAll();
+                .logout()
+                .logoutSuccessUrl("/login")
+                .and()
+                .csrf().disable()
+                .exceptionHandling().accessDeniedPage("/403");
     }
 
+    @Override
+    public void configure(WebSecurity webSecurity){
+        webSecurity.ignoring().antMatchers("/resources/**", "/css");
+    }
     @Bean
     public BCryptPasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();

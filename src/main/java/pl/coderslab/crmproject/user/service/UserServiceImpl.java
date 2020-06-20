@@ -8,18 +8,21 @@ import pl.coderslab.crmproject.role.RoleRepository;
 import pl.coderslab.crmproject.user.domain.User;
 import pl.coderslab.crmproject.user.domain.UserRepository;
 
+import javax.transaction.Transactional;
 import java.util.Arrays;
 import java.util.HashSet;
+import java.util.Optional;
 
 @AllArgsConstructor
 @Service
+@Transactional
 public class UserServiceImpl implements UserService{
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
     private final BCryptPasswordEncoder passwordEncoder;
 
     @Override
-    public User findByUserName(String username){
+    public User findByUserName(String username) {
         return userRepository.findByUsername(username);
     }
 
