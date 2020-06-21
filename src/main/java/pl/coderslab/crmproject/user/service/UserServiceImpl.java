@@ -11,7 +11,6 @@ import pl.coderslab.crmproject.user.domain.UserRepository;
 import javax.transaction.Transactional;
 import java.util.Arrays;
 import java.util.HashSet;
-import java.util.Optional;
 
 @AllArgsConstructor
 @Service
@@ -28,6 +27,8 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public void saveUser(User user){
+        user.setFirstName(user.getFirstName());
+        user.setSurname(user.getSurname());
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         user.setEnabled(1);
         Role userRole = roleRepository.findByName("ROLE_USER");
