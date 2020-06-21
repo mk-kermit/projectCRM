@@ -2,7 +2,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <html>
 <head>
-    <title>Login page</title>
+    <title>Strona logowania</title>
     <link rel="stylesheet" href="css/bootstrap.min.css">
 </head>
 <body>

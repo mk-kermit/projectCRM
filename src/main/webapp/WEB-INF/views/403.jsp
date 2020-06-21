@@ -7,5 +7,6 @@
 </head>
 <body>
     <h1>Dostęp zabroniony</h1>
+    <button><a href="/login">Powrót do strony logowania</a></button>
 </body>
 </html>

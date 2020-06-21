@@ -10,6 +10,6 @@ public class MainBoardController {
 
     @GetMapping("/mainboard")
     public String showMainboard(){
-        return "mainboard";
+        return "loged/mainboard";
     }
 }

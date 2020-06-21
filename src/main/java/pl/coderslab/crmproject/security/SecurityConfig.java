@@ -23,7 +23,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
                 .antMatchers("/", "/login").permitAll()
-                .antMatchers("/loged/**").hasAnyRole("USER", "ADMIN")
+                .antMatchers("/loged/**").hasAnyRole("USER", "ADMIN", "LEADER")
+                .antMatchers("/leader/**").hasAnyRole("ADMIN", "LEADER")
                 .antMatchers("/admin/**").hasRole("ADMIN")
                 .and()
                 .formLogin()
@@ -40,9 +41,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     @Override
-    public void configure(WebSecurity webSecurity){
+    public void configure(WebSecurity webSecurity) {
         webSecurity.ignoring().antMatchers("/resources/**", "/css");
     }
+
     @Bean
     public BCryptPasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
