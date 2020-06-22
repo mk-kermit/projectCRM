@@ -44,3 +44,16 @@
     color: black;
 }
 
+.register {
+    text-align: center;
+    margin: 8px;
+}
+.register input.textfield{
+    margin: 6px;
+}
+.register input.button{
+    margin: 6px;
+    background-color: #737373;
+    color: white;
+}
+

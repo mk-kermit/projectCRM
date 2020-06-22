@@ -10,26 +10,21 @@
 <div class="nav">
     <%@include file="/WEB-INF/views/includes/header.jsp" %>
 </div>
- <form action="POST">
-        <div class="row">
-            <div class="col">
-                <label>Login:</label><input type="text"/></br>
-            </div>
-            <div class="col">
-                <label>Hasło:</label><input type="password"/></br>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col">
-                <label>Imię:</label><input type="text"/></br>
-            </div>
-            <div class="col">
-                <label>Nazwisko:</label><input type="text"/></br>
-            </div>
-        </div>
-        <div class="row">
-            <input type="submit" value="Zarejestruj">
-        </div>
-    </form>
+<form action="POST">
+    <div class="register">
+        <label>Login:</label></br>
+        <input class="textfield" type="text"/></br>
+        <label>Hasło:</label></br>
+        <input class="textfield" type="password"/></br>
+        <label>Imię:</label></br>
+        <input class="textfield"type="text"/></br>
+        <label>Nazwisko:</label></br>
+        <input class="textfield" type="text"/></br>
+        <input class="button" type="submit" value="Zarejestruj">
+    </div>
+</form>
+<div class="footer">
+    <%@include file="/WEB-INF/views/includes/footer.jsp" %>
+</div>
 </body>
 </html>

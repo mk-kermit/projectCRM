@@ -11,4 +11,9 @@ public class LogedController {
     public String home(){
         return "loged/home";
     }
+
+    @GetMapping("/mainboard")
+    public String mainBoard(){
+        return "loged/mainboard";
+    }
 }
