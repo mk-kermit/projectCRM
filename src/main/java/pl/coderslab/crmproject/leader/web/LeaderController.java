@@ -6,10 +6,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import pl.coderslab.crmproject.task.domain.Task;
 import pl.coderslab.crmproject.task.domain.TaskRepository;
 import pl.coderslab.crmproject.user.domain.UserRepository;
@@ -23,27 +20,44 @@ public class LeaderController {
     private UserRepository userRepository;
 
     @GetMapping("")
-    public String leaderHome(){
-        return "leader/home";
+    public String leaderHome() {
+        return "leader/homeLeader";
     }
 
     @GetMapping("/mainboard")
-    public String leaderMainboard(){
+    public String leaderMainboard() {
         return "leader/mainboard";
     }
 
     @GetMapping("/create-task")
-    public String showCreateTaskForm(Model model){
+    public String showCreateTaskForm(Model model) {
         model.addAttribute("task", new Task());
+        model.addAttribute("userList", userRepository.findAllByRoles("USER"));
         return "leader/create-task";
     }
 
     @PostMapping("/create-task")
-    public String processTaskForm(@ModelAttribute @Validated Task task, BindingResult bindingResult){
-        if(bindingResult.hasErrors()){
+    public String processTaskForm(@ModelAttribute @Validated Task task, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
             return "leader/create-task";
         }
         return "leader/mainboard";
     }
 
+    @GetMapping("/edit-task/{id}")
+    public String showEditTaskForm(Model model, @PathVariable long id) {
+        Task task = taskRepository.findById(id);
+        model.addAttribute("task", task);
+        return "leader/edit-task";
+    }
+
+    @PostMapping("/edit-task/{id}")
+    public String processUpdateTaskForm(@PathVariable Long id, @ModelAttribute @Validated Task task,
+                                        BindingResult bindingResult){
+        if(bindingResult.hasErrors()){
+            return "leader/edit-task";
+        }
+        taskRepository.save(task);
+        return "redirect:../../allTasks";
+    }
 }

@@ -1,10 +1,10 @@
-.topnav{
+.topnav {
     background-color: #adadad;
     overflow: hidden;
     width: 100%;
 }
 
-.topnav a{
+.topnav a {
     float: right;
     color: black;
     text-align: center;
@@ -12,15 +12,18 @@
     text-decoration: none;
     font-size: 17px;
 }
-.topnav a:hover{
+
+.topnav a:hover {
     background-color: #9d9d9d;
     color: black;
 }
-.topnav a.active{
+
+.topnav a.active {
     background-color: #269abc;
     color: white;
 }
-.footer{
+
+.footer {
     position: fixed;
     left: 0;
     bottom: 0;
@@ -32,28 +35,31 @@
     padding: 12px 16px;
     overflow: hidden;
 }
-.footer a{
+
+.footer a {
     color: black;
     text-align: center;
     padding: 14px 16px;
     text-decoration: none;
     font-size: 17px;
 }
-.footer a:hover{
+
+.footer a:hover {
     background-color: #9d9d9d;
     color: black;
 }
 
-.register {
+.newform {
     text-align: center;
     margin: 8px;
 }
-.register input.textfield{
+
+.newform input.textfield {
     margin: 6px;
 }
-.register input.button{
+
+.newform input.button {
     margin: 6px;
     background-color: #737373;
     color: white;
 }
-

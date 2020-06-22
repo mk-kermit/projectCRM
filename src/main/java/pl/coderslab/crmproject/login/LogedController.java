@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class LogedController {
     @GetMapping("")
     public String home(){
-        return "loged/home";
+        return "loged/homeUser";
     }
 
     @GetMapping("/mainboard")
