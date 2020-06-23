@@ -19,6 +19,12 @@ public class AdminController {
     private RoleRepository roleRepository;
     private UserRepository userRepository;
 
+    @GetMapping("/userList")
+    public String showAllUsers(Model model){
+        model.addAttribute("userList", userRepository.findAll());
+        return "admin/userList";
+    }
+
     @GetMapping("/create-user")
     public String showCreateUserForm(Model model){
         model.addAttribute("user", new User());

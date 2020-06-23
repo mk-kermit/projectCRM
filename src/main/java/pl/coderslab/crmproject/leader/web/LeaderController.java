@@ -24,6 +24,12 @@ public class LeaderController {
         return "leader/homeLeader";
     }
 
+    @GetMapping("/allTasks")
+    public String showAllTasks(Model model){
+        model.addAttribute("taskList", taskRepository.findAll());
+        return "leader/allTasks";
+    }
+
     @GetMapping("/mainboard")
     public String leaderMainboard() {
         return "leader/mainboard";
@@ -52,12 +58,13 @@ public class LeaderController {
     }
 
     @PostMapping("/edit-task/{id}")
-    public String processUpdateTaskForm(@PathVariable Long id, @ModelAttribute @Validated Task task,
+    public String processUpdateTaskForm(@PathVariable long id, @ModelAttribute @Validated Task task,
                                         BindingResult bindingResult){
         if(bindingResult.hasErrors()){
             return "leader/edit-task";
         }
+        task.setDescription(taskRepository.findById(id).getDescription());
         taskRepository.save(task);
-        return "redirect:../../allTasks";
+        return "redirect:leader/allTasks";
     }
 }
