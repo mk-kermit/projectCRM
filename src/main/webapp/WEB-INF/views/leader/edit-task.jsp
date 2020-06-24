@@ -1,8 +1,9 @@
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Formularz dodawania zadania</title>
+    <title>Formularz edycji zadania</title>
 </head>
 <body>
 <div class="top">
@@ -10,8 +11,8 @@
 <div class="nav">
     <%@include file="/WEB-INF/views/includes/header.jsp" %>
 </div>
-<form action="POST">
-    <div class="newform">
+<form:form method="POST" modelAttribute="task">
+    <div class="register">
         <label>Tytuł:</label></br>
         <input class="textfield" type="text"/></br>
         <label>Opis:</label></br>
@@ -22,9 +23,9 @@
                 <option value="${user.id}">${user.firstName} ${user.surname}</option>
             </c:forEach>
         </select></br>
-        <input class="button" type="submit" value="Zarejestruj">
+        </br><input class="button" type="submit" value="Zmień">
     </div>
-</form>
+</form:form>
 <div class="footer">
     <%@include file="/WEB-INF/views/includes/footer.jsp" %>
 </div>

@@ -28,9 +28,9 @@ public class LogedController {
         return "loged/mainboard";
     }
 
-    @GetMapping("/myTasks/")
+    @GetMapping("/myTasks")
     public String showMyTasks(CurrentUser currentUser, Model model){
-        model.addAttribute("myTasks", taskRepository.findTaskByUserId(currentUser.getUser().getId()));
+        model.addAttribute("myTasks", taskRepository.findTasksByUserId(currentUser.getUser().getId()));
         return "loged/myTasks";
     }
 }

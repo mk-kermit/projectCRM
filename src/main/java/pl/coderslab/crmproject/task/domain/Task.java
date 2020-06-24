@@ -21,4 +21,6 @@ public class Task {
     private String description;
     @Column(name = "task_status")
     private Status status;
+//    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+//    private User user;
 }

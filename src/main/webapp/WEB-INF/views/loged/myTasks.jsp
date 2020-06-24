@@ -1,17 +1,15 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%--
-  Created by IntelliJ IDEA.
-  User: maciej
-  Date: 23.06.2020
-  Time: 11:58
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
     <title>Moje zadania</title>
 </head>
 <body>
+<div class="top">
+</div>
+<div class="nav">
+    <%@include file="/WEB-INF/views/includes/header.jsp" %>
+</div>
 <table>
     <c:forEach var="task" items="${myTasks}">
         <tr>
@@ -22,5 +20,8 @@
         </tr>
     </c:forEach>
 </table>
+<div class="footer">
+    <%@include file="/WEB-INF/views/includes/footer.jsp" %>
+</div>
 </body>
 </html>

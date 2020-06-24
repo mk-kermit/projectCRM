@@ -1,7 +1,7 @@
 package pl.coderslab.crmproject.leader.web;
 
 import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -9,11 +9,11 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import pl.coderslab.crmproject.task.domain.Task;
 import pl.coderslab.crmproject.task.domain.TaskRepository;
+import pl.coderslab.crmproject.user.domain.CurrentUser;
 import pl.coderslab.crmproject.user.domain.UserRepository;
 
 @Controller
 @AllArgsConstructor
-@NoArgsConstructor
 @RequestMapping("/leader")
 public class LeaderController {
     private TaskRepository taskRepository;
@@ -25,20 +25,15 @@ public class LeaderController {
     }
 
     @GetMapping("/allTasks")
-    public String showAllTasks(Model model){
-        model.addAttribute("taskList", taskRepository.findAll());
+    public String showAllTasks(Model model, @AuthenticationPrincipal CurrentUser currentUser){
+        model.addAttribute("taskList", taskRepository.findTasksByUserId(currentUser.getUser().getId()));
         return "leader/allTasks";
-    }
-
-    @GetMapping("/mainboard")
-    public String leaderMainboard() {
-        return "leader/mainboard";
     }
 
     @GetMapping("/create-task")
     public String showCreateTaskForm(Model model) {
         model.addAttribute("task", new Task());
-        model.addAttribute("userList", userRepository.findAllByRoles("USER"));
+        model.addAttribute("userList", userRepository.findAllByEnabled(1));
         return "leader/create-task";
     }
 
@@ -47,7 +42,8 @@ public class LeaderController {
         if (bindingResult.hasErrors()) {
             return "leader/create-task";
         }
-        return "leader/mainboard";
+        taskRepository.save(task);
+        return "redirect:/leader/allTasks";
     }
 
     @GetMapping("/edit-task/{id}")
@@ -66,5 +62,10 @@ public class LeaderController {
         task.setDescription(taskRepository.findById(id).getDescription());
         taskRepository.save(task);
         return "redirect:leader/allTasks";
+    }
+
+    @GetMapping("/delete-task/{id}")
+    public String showDelete(Model model, @PathVariable long id){
+        return "deleteQuestion";
     }
 }

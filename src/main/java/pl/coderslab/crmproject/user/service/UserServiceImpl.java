@@ -3,21 +3,17 @@ package pl.coderslab.crmproject.user.service;
 import lombok.AllArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-import pl.coderslab.crmproject.role.Role;
-import pl.coderslab.crmproject.role.RoleRepository;
+import pl.coderslab.crmproject.user.domain.Role;
 import pl.coderslab.crmproject.user.domain.User;
 import pl.coderslab.crmproject.user.domain.UserRepository;
 
 import javax.transaction.Transactional;
-import java.util.Arrays;
-import java.util.HashSet;
 
 @AllArgsConstructor
 @Service
 @Transactional
 public class UserServiceImpl implements UserService{
     private final UserRepository userRepository;
-    private final RoleRepository roleRepository;
     private final BCryptPasswordEncoder passwordEncoder;
 
     @Override
@@ -31,13 +27,12 @@ public class UserServiceImpl implements UserService{
         user.setSurname(user.getSurname());
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         user.setEnabled(1);
-        Role userRole = roleRepository.findByName("ROLE_USER");
-        user.setRoles(new HashSet<Role>(Arrays.asList(userRole)));
+        user.setRole(Role.ROLE_USER);
         userRepository.save(user);
     }
 
     @Override
-    public User findByUserId(long id) {
-        return userRepository.findByUserId(id);
+    public User findById(long id) {
+        return userRepository.findById(id);
     }
 }
