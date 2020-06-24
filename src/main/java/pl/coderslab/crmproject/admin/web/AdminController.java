@@ -43,7 +43,7 @@ public class AdminController {
     @GetMapping("/create-user")
     public String showCreateUserForm(Model model) {
         model.addAttribute("user", new User());
-        model.addAttribute("role", getRoles());
+        model.addAttribute("roles", getRoles());
         return "admin/create-user";
     }
 
