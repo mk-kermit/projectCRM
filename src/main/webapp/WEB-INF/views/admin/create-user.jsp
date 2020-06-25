@@ -11,20 +11,20 @@
 <div class="nav">
     <%@include file="/WEB-INF/views/includes/header.jsp" %>
 </div>
-<form action="POST">
+<form:form method="POST" modelAttribute="user">
     <div class="register">
-        <label>Login:</label></br>
-        <input class="textfield" type="text"/></br>
-        <label>Hasło:</label></br>
-        <input class="textfield" type="password"/></br>
-        <label>Imię:</label></br>
-        <input class="textfield"type="text"/></br>
-        <label>Nazwisko:</label></br>
-        <input class="textfield" type="text"/></br>
+        <form:label path="username">Login:</form:label></br>
+        <form:input class="textfield" path="username"/></br>
+        <form:label path="password">Hasło:</form:label></br>
+        <form:password class="textfield" path="password" /></br>
+        <form:label path="firstName">Imię:</form:label></br>
+        <form:input class="textfield" path="firstName"/></br>
+        <form:label path="surname">Nazwisko:</form:label></br>
+        <form:input class="textfield" path="surname"/></br>
         <form:radiobuttons path="role" items="${roles}"/>
-        </br><input class="button" type="submit" value="Zarejestruj">
+        </br><input class="button" type="submit" value="Zarejestruj"/>
     </div>
-</form>
+</form:form>
 <div class="footer">
     <%@include file="/WEB-INF/views/includes/footer.jsp" %>
 </div>

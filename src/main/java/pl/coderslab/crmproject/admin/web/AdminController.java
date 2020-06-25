@@ -11,14 +11,18 @@ import pl.coderslab.crmproject.user.domain.Role;
 import pl.coderslab.crmproject.user.domain.User;
 import pl.coderslab.crmproject.user.domain.UserRepository;
 import pl.coderslab.crmproject.user.service.UserService;
+import pl.coderslab.crmproject.validation.AddValidator;
+import pl.coderslab.crmproject.validation.EditValidator;
 
-import javax.validation.Valid;
+import javax.servlet.http.HttpSession;
+import javax.validation.groups.Default;
 import java.util.Arrays;
 import java.util.List;
 
 @Builder
 @AllArgsConstructor
 @Controller
+@SessionAttributes({"baseUser"})
 @RequestMapping("/admin")
 public class AdminController {
     private UserService userService;
@@ -31,7 +35,7 @@ public class AdminController {
 
     @GetMapping("")
     public String showHome() {
-        return "homeAdmin";
+        return "admin/homeAdmin";
     }
 
     @GetMapping("/userList")
@@ -43,17 +47,15 @@ public class AdminController {
     @GetMapping("/create-user")
     public String showCreateUserForm(Model model) {
         model.addAttribute("user", new User());
-        model.addAttribute("roles", getRoles());
         return "admin/create-user";
     }
 
     @PostMapping("/create-user")
-    public String processCreateUserForm(@ModelAttribute("role") @Valid Role role, @ModelAttribute("user") @Valid User user,BindingResult bindingResult) {
+    public String processCreateUserForm(@Validated({Default.class, AddValidator.class}) User user, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return "create-user";
         }
         user.setEnabled(1);
-        user.setRole(role);
         userRepository.save(user);
         return "redirect:/admin/userList";
     }
@@ -62,15 +64,18 @@ public class AdminController {
     public String showUserEditionForm(@PathVariable Long id, Model model) {
         User user = userService.findById(id);
         model.addAttribute("user", user);
+        model.addAttribute("baseUser", user);
         return "admin/edit-user";
     }
 
     @PostMapping("/edit-user/{id}")
-    public String processUserEditionForm(@ModelAttribute(name = "user") @Validated User user, BindingResult bindingResult) {
+    public String processUserEditionForm(@Validated({Default.class, EditValidator.class}) User user,
+                                         BindingResult bindingResult, HttpSession session) {
         if (bindingResult.hasErrors()) {
             return "admin/edit-user";
         }
-        userRepository.save(user);
-        return "redirect:/admin/userList";
+        User baseUser = (User) session.getAttribute("baseUser");
+        userService.saveEditUser(user, baseUser);
+        return "redirect:../../admin/userList";
     }
 }

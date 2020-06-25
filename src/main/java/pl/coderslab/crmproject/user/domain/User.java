@@ -1,12 +1,13 @@
 package pl.coderslab.crmproject.user.domain;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import pl.coderslab.crmproject.task.domain.Task;
+import pl.coderslab.crmproject.validation.AddValidator;
+import pl.coderslab.crmproject.validation.EditValidator;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.util.Set;
 
 @Data
@@ -19,18 +20,26 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(name = "user_name", unique = true, length = 60, nullable = false)
+    @Column(name = "user_name", unique = true, length = 60)
+    @NotNull(groups = {AddValidator.class, EditValidator.class})
+    @NotEmpty(groups = {AddValidator.class, EditValidator.class})
     private String username;
-    @Column(name = "user_password")
+    @Column(name = "user_password", length = 60)
+    @NotNull(groups = {AddValidator.class, EditValidator.class})
+    @NotEmpty(groups = {AddValidator.class, EditValidator.class})
     private String password;
     @Column(name = "user_first_name", length = 60)
+    @NotNull(groups = {AddValidator.class, EditValidator.class})
+    @NotEmpty(groups = {AddValidator.class, EditValidator.class})
     private String firstName;
     @Column(name = "user_surname", length = 80)
+    @NotNull(groups = {AddValidator.class, EditValidator.class})
+    @NotEmpty(groups = {AddValidator.class, EditValidator.class})
     private String surname;
     @Column(name = "user_enabled", length = 1)
     private int enabled;
     @Column(name = "user_role")
-    private Role role;
+    private String role ;
     @OneToMany(fetch = FetchType.EAGER)
     private Set<Task> tasks;
 }

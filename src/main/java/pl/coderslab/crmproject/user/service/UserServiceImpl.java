@@ -3,7 +3,6 @@ package pl.coderslab.crmproject.user.service;
 import lombok.AllArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-import pl.coderslab.crmproject.user.domain.Role;
 import pl.coderslab.crmproject.user.domain.User;
 import pl.coderslab.crmproject.user.domain.UserRepository;
 
@@ -23,16 +22,26 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public void saveUser(User user){
+        user.setUsername(user.getUsername());
         user.setFirstName(user.getFirstName());
         user.setSurname(user.getSurname());
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         user.setEnabled(1);
-        user.setRole(Role.ROLE_USER);
+        user.setRole(user.getRole());
         userRepository.save(user);
     }
 
     @Override
     public User findById(long id) {
         return userRepository.findById(id);
+    }
+
+    @Override
+    public void saveEditUser(User user, User baseUser) {
+        baseUser.setUsername(user.getUsername());
+        baseUser.setFirstName(user.getFirstName());
+        baseUser.setSurname(user.getSurname());
+        baseUser.setRole(user.getRole());
+        userRepository.save(baseUser);
     }
 }

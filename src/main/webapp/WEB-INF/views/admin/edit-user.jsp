@@ -19,7 +19,11 @@
         <input class="textfield"type="text"/></br>
         <label>Nazwisko:</label></br>
         <input class="textfield" type="text"/></br>
-        <form:radiobuttons path="role" items="${roles}"/>
+<%--        <form:select path="role">--%>
+<%--            <c:forEach items="${roles}" var="role">--%>
+<%--                <form:option value="${role}">${role}</form:option>--%>
+<%--            </c:forEach>--%>
+<%--        </form:select>--%>
         </br><input class="button" type="submit" value="Zmień">
     </div>
 </form:form>

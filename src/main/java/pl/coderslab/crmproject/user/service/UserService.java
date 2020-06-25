@@ -6,4 +6,5 @@ public interface UserService {
     User findByUserName(String name);
     void saveUser(User user);
     User findById(long id);
+    void saveEditUser(User user, User baseUser);
 }

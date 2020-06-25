@@ -10,7 +10,11 @@ import org.springframework.web.bind.annotation.*;
 import pl.coderslab.crmproject.task.domain.Task;
 import pl.coderslab.crmproject.task.domain.TaskRepository;
 import pl.coderslab.crmproject.user.domain.CurrentUser;
+import pl.coderslab.crmproject.user.domain.User;
 import pl.coderslab.crmproject.user.domain.UserRepository;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Controller
 @AllArgsConstructor
@@ -19,6 +23,10 @@ public class LeaderController {
     private TaskRepository taskRepository;
     private UserRepository userRepository;
 
+    @ModelAttribute("userList")
+    public List<User> getUsers(){
+        return new ArrayList<>(userRepository.findAllByEnabled(1));
+    }
     @GetMapping("")
     public String leaderHome() {
         return "leader/homeLeader";
@@ -26,14 +34,14 @@ public class LeaderController {
 
     @GetMapping("/allTasks")
     public String showAllTasks(Model model, @AuthenticationPrincipal CurrentUser currentUser){
-        model.addAttribute("taskList", taskRepository.findTasksByUserId(currentUser.getUser().getId()));
+        model.addAttribute("taskList", taskRepository.findAll());
         return "leader/allTasks";
     }
 
     @GetMapping("/create-task")
     public String showCreateTaskForm(Model model) {
         model.addAttribute("task", new Task());
-        model.addAttribute("userList", userRepository.findAllByEnabled(1));
+        model.addAttribute("userList", getUsers());
         return "leader/create-task";
     }
 
@@ -59,9 +67,10 @@ public class LeaderController {
         if(bindingResult.hasErrors()){
             return "leader/edit-task";
         }
+
         task.setDescription(taskRepository.findById(id).getDescription());
         taskRepository.save(task);
-        return "redirect:leader/allTasks";
+        return "redirect:../../leader/allTasks";
     }
 
     @GetMapping("/delete-task/{id}")

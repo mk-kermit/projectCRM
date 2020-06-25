@@ -2,13 +2,14 @@ package pl.coderslab.crmproject.task.service;
 
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
-import pl.coderslab.crmproject.task.domain.Status;
 import pl.coderslab.crmproject.task.domain.Task;
 import pl.coderslab.crmproject.task.domain.TaskRepository;
 import pl.coderslab.crmproject.user.domain.UserRepository;
 
 import javax.transaction.Transactional;
 import java.util.List;
+
+import static pl.coderslab.crmproject.task.domain.Status.STATUS_OPEN;
 
 @AllArgsConstructor
 @Service
@@ -26,7 +27,7 @@ public class TaskServiceImpl implements TaskService{
     public void saveTask(Task task) {
         task.setTitle(task.getTitle());
         task.setDescription(task.getDescription());
-        task.setStatus(Status.STATUS_OPEN);
+        task.setStatus(STATUS_OPEN.toString());
         taskRepository.save(task);
     }
 

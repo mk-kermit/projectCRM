@@ -63,3 +63,21 @@
     background-color: #737373;
     color: white;
 }
+.allUsers {
+    width: 100%;
+}
+td {
+    padding: 15px;
+    text-align: center;
+    border-bottom: 1px solid black;
+}
+
+tr {
+    border-bottom: 1px solid black;
+}
+tr:nth-child(even){
+    background-color: #5bc0de;
+}
+tr:hover {
+    background-color: #dddddd;
+}
