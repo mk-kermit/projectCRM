@@ -2,6 +2,7 @@
     background-color: #adadad;
     overflow: hidden;
     width: 100%;
+    font-family: "Century Schoolbook L";
 }
 
 .topnav a {
@@ -63,9 +64,10 @@
     background-color: #737373;
     color: white;
 }
-.allUsers {
+.allItems {
     width: 100%;
 }
+
 td {
     padding: 15px;
     text-align: center;
@@ -80,4 +82,30 @@ tr:nth-child(even){
 }
 tr:hover {
     background-color: #dddddd;
+}
+.register {
+    text-align: left;
+}
+
+.button {
+    background-color: #dddddd;
+    text-decoration-color: #5bc0de;
+    margin-top: 8px;
+}
+.textfield {
+    width: 100%;
+}
+.labels{
+    font-family: "Century Schoolbook L";
+}
+
+.userList{
+    width: 10%;
+    font-family: "Century Schoolbook L";
+}
+span {
+    display: block;
+}
+#grad {
+    background-image: linear-gradient(gainsboro, lightgray);
 }

@@ -3,6 +3,7 @@
 <html>
 <head>
     <title>Strona startowa Leadera</title>
+    <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
 <div class="top">
@@ -10,7 +11,9 @@
 <div class="nav">
     <%@include file="/WEB-INF/views/includes/header.jsp" %>
 </div>
+<div id="grad">
 
+</div>
 <div class="footer">
     <%@include file="/WEB-INF/views/includes/footer.jsp"%>
 </div>

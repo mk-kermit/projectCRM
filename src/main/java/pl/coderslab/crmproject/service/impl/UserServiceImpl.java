@@ -1,19 +1,29 @@
-package pl.coderslab.crmproject.user.service;
+package pl.coderslab.crmproject.service.impl;
 
+import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
+import lombok.experimental.FieldDefaults;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-import pl.coderslab.crmproject.user.domain.User;
-import pl.coderslab.crmproject.user.domain.UserRepository;
+import pl.coderslab.crmproject.domain.User;
+import pl.coderslab.crmproject.repository.UserRepository;
+import pl.coderslab.crmproject.service.UserService;
 
 import javax.transaction.Transactional;
+import java.util.List;
 
-@AllArgsConstructor
+
 @Service
 @Transactional
-public class UserServiceImpl implements UserService{
-    private final UserRepository userRepository;
-    private final BCryptPasswordEncoder passwordEncoder;
+@AllArgsConstructor
+@FieldDefaults(level = AccessLevel.PRIVATE)
+@Slf4j
+public class UserServiceImpl implements UserService {
+
+    final UserRepository userRepository;
+
+    final BCryptPasswordEncoder passwordEncoder;
 
     @Override
     public User findByUserName(String username) {
@@ -29,6 +39,7 @@ public class UserServiceImpl implements UserService{
         user.setEnabled(1);
         user.setRole(user.getRole());
         userRepository.save(user);
+        log.info("User with id {} has been saved", user.getId());
     }
 
     @Override
@@ -43,5 +54,16 @@ public class UserServiceImpl implements UserService{
         baseUser.setSurname(user.getSurname());
         baseUser.setRole(user.getRole());
         userRepository.save(baseUser);
+        log.info("User with id {} has been saved", user.getId());
+    }
+
+    @Override
+    public void deleteUser(User user) {
+        userRepository.delete(user);
+    }
+
+    @Override
+    public List<User> getEnableUsers() {
+        return userRepository.findAllByEnabled(1);
     }
 }

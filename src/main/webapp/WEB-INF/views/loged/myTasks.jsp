@@ -3,6 +3,7 @@
 <html>
 <head>
     <title>Moje zadania</title>
+    <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
 <div class="top">
@@ -10,16 +11,18 @@
 <div class="nav">
     <%@include file="/WEB-INF/views/includes/header.jsp" %>
 </div>
-<table>
-    <c:forEach var="task" items="${myTasks}">
-        <tr>
-            <td>${task.id}</td>
-            <td>${task.title}</td>
-            <td>${task.description}</td>
-            <td>${task.status}</td>
-        </tr>
-    </c:forEach>
-</table>
+<div id="grad">
+    <table class="allItems">
+        <c:forEach var="task" items="${myTasks}">
+            <tr>
+                <td>${task.id}</td>
+                <td>${task.title}</td>
+                <td>${task.description}</td>
+                <td>${task.status}</td>
+            </tr>
+        </c:forEach>
+    </table>
+</div>
 <div class="footer">
     <%@include file="/WEB-INF/views/includes/footer.jsp" %>
 </div>

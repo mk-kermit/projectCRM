@@ -1,18 +1,19 @@
-package pl.coderslab.crmproject.admin.web;
+package pl.coderslab.crmproject.controller;
 
+import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.experimental.FieldDefaults;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import pl.coderslab.crmproject.user.domain.Role;
-import pl.coderslab.crmproject.user.domain.User;
-import pl.coderslab.crmproject.user.domain.UserRepository;
-import pl.coderslab.crmproject.user.service.UserService;
-import pl.coderslab.crmproject.validation.AddValidator;
-import pl.coderslab.crmproject.validation.EditValidator;
+import pl.coderslab.crmproject.domain.User;
+import pl.coderslab.crmproject.enumeration.Role;
+import pl.coderslab.crmproject.service.UserService;
+import pl.coderslab.crmproject.util.validation.AddValidator;
+import pl.coderslab.crmproject.util.validation.EditValidator;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.groups.Default;
@@ -24,9 +25,9 @@ import java.util.List;
 @Controller
 @SessionAttributes({"baseUser"})
 @RequestMapping("/admin")
+@FieldDefaults(level = AccessLevel.PRIVATE)
 public class AdminController {
-    private UserService userService;
-    private UserRepository userRepository;
+    UserService userService;
 
     @ModelAttribute("roles")
     public List<Role> getRoles() {
@@ -40,7 +41,7 @@ public class AdminController {
 
     @GetMapping("/userList")
     public String showAllUsers(Model model) {
-        model.addAttribute("userList", userRepository.findAll());
+        model.addAttribute("userList", userService.getEnableUsers());
         return "admin/userList";
     }
 
@@ -56,7 +57,7 @@ public class AdminController {
             return "create-user";
         }
         user.setEnabled(1);
-        userRepository.save(user);
+        userService.saveUser(user);
         return "redirect:/admin/userList";
     }
 
@@ -76,6 +77,13 @@ public class AdminController {
         }
         User baseUser = (User) session.getAttribute("baseUser");
         userService.saveEditUser(user, baseUser);
+        return "redirect:../../admin/userList";
+    }
+
+    @GetMapping("/delete/{id}")
+    public String deleteConfirmation(@PathVariable Long id){
+        User user = userService.findById(id);
+        userService.deleteUser(user);
         return "redirect:../../admin/userList";
     }
 }

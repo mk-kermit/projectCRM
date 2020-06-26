@@ -1,4 +1,4 @@
-package pl.coderslab.crmproject.task.domain;
+package pl.coderslab.crmproject.enumeration;
 
 public enum Status {
     STATUS_OPEN,

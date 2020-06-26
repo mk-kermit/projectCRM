@@ -3,7 +3,7 @@
 <html>
 <head>
     <title>Formularz dodawania użytkownika</title>
-    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
 <div class="top">
@@ -11,20 +11,22 @@
 <div class="nav">
     <%@include file="/WEB-INF/views/includes/header.jsp" %>
 </div>
-<form:form method="POST" modelAttribute="user">
-    <div class="register">
-        <form:label path="username">Login:</form:label></br>
-        <form:input class="textfield" path="username"/></br>
-        <form:label path="password">Hasło:</form:label></br>
-        <form:password class="textfield" path="password" /></br>
-        <form:label path="firstName">Imię:</form:label></br>
-        <form:input class="textfield" path="firstName"/></br>
-        <form:label path="surname">Nazwisko:</form:label></br>
-        <form:input class="textfield" path="surname"/></br>
-        <form:radiobuttons path="role" items="${roles}"/>
-        </br><input class="button" type="submit" value="Zarejestruj"/>
-    </div>
-</form:form>
+<div id="grad">
+    <form:form method="POST" modelAttribute="user">
+        <div class="register">
+        <span><form:label class="labels" path="username">Login:</form:label></br>
+                <form:input class="textfield" path="username"/></span>
+            <span><form:label class="labels" path="password">Hasło:</form:label></br>
+        <form:password class="textfield" path="password"/></span>
+            <span><form:label class="labels" path="firstName">Imię:</form:label></br>
+        <form:input class="textfield" path="firstName"/></span>
+            <span><form:label class="labels" path="surname">Nazwisko:</form:label></br>
+        <form:input class="textfield" path="surname"/></span>
+            <form:radiobuttons path="role" items="${roles}"/>
+            </br><input class="button" type="submit" value="Zarejestruj"/>
+        </div>
+    </form:form>
+</div>
 <div class="footer">
     <%@include file="/WEB-INF/views/includes/footer.jsp" %>
 </div>

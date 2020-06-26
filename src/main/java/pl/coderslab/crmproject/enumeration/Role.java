@@ -1,4 +1,4 @@
-package pl.coderslab.crmproject.user.domain;
+package pl.coderslab.crmproject.enumeration;
 
 public enum Role {
     ROLE_USER,

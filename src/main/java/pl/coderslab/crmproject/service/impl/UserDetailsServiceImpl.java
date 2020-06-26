@@ -1,19 +1,24 @@
-package pl.coderslab.crmproject.user.service;
+package pl.coderslab.crmproject.service.impl;
 
+import lombok.AccessLevel;
+import lombok.experimental.FieldDefaults;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import pl.coderslab.crmproject.user.domain.CurrentUser;
-import pl.coderslab.crmproject.user.domain.User;
+import org.springframework.stereotype.Service;
+import pl.coderslab.crmproject.domain.User;
+import pl.coderslab.crmproject.security.CurrentUser;
+import pl.coderslab.crmproject.service.UserService;
 
 import java.util.HashSet;
 import java.util.Set;
 
-public class SpringDataUserDetailsService implements UserDetailsService {
-    private UserService userService;
+@Service
+@FieldDefaults(level = AccessLevel.PRIVATE)
+public class UserDetailsServiceImpl implements org.springframework.security.core.userdetails.UserDetailsService {
+    UserService userService;
 
     @Autowired
     public void setUserRepository(UserService userService){

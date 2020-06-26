@@ -2,8 +2,8 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Title</title>
-    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <title>403</title>
+    <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
     <h1>Dostęp zabroniony</h1>

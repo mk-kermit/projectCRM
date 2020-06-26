@@ -1,17 +1,19 @@
-package pl.coderslab.crmproject.leader.web;
+package pl.coderslab.crmproject.controller;
 
+import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
+import lombok.experimental.FieldDefaults;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import pl.coderslab.crmproject.task.domain.Task;
-import pl.coderslab.crmproject.task.domain.TaskRepository;
-import pl.coderslab.crmproject.user.domain.CurrentUser;
-import pl.coderslab.crmproject.user.domain.User;
-import pl.coderslab.crmproject.user.domain.UserRepository;
+import pl.coderslab.crmproject.domain.Task;
+import pl.coderslab.crmproject.domain.User;
+import pl.coderslab.crmproject.security.CurrentUser;
+import pl.coderslab.crmproject.service.TaskService;
+import pl.coderslab.crmproject.service.UserService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,13 +21,14 @@ import java.util.List;
 @Controller
 @AllArgsConstructor
 @RequestMapping("/leader")
+@FieldDefaults(level = AccessLevel.PRIVATE)
 public class LeaderController {
-    private TaskRepository taskRepository;
-    private UserRepository userRepository;
+    final UserService userService;
+    final TaskService taskService;
 
     @ModelAttribute("userList")
     public List<User> getUsers(){
-        return new ArrayList<>(userRepository.findAllByEnabled(1));
+        return new ArrayList<>(userService.getEnableUsers());
     }
     @GetMapping("")
     public String leaderHome() {
@@ -34,7 +37,7 @@ public class LeaderController {
 
     @GetMapping("/allTasks")
     public String showAllTasks(Model model, @AuthenticationPrincipal CurrentUser currentUser){
-        model.addAttribute("taskList", taskRepository.findAll());
+        model.addAttribute("taskList", taskService.getAllTasks());
         return "leader/allTasks";
     }
 
@@ -50,31 +53,31 @@ public class LeaderController {
         if (bindingResult.hasErrors()) {
             return "leader/create-task";
         }
-        taskRepository.save(task);
+        taskService.saveTask(task);
         return "redirect:/leader/allTasks";
     }
 
     @GetMapping("/edit-task/{id}")
     public String showEditTaskForm(Model model, @PathVariable long id) {
-        Task task = taskRepository.findById(id);
+        Task task = taskService.getTaskById(id);
         model.addAttribute("task", task);
         return "leader/edit-task";
     }
 
     @PostMapping("/edit-task/{id}")
-    public String processUpdateTaskForm(@PathVariable long id, @ModelAttribute @Validated Task task,
+    public String processUpdateTaskDescription(@PathVariable long id, @ModelAttribute @Validated Task task,
                                         BindingResult bindingResult){
         if(bindingResult.hasErrors()){
             return "leader/edit-task";
         }
-
-        task.setDescription(taskRepository.findById(id).getDescription());
-        taskRepository.save(task);
+        taskService.updateDescription(taskService.getTaskById(id), task.getDescription());
         return "redirect:../../leader/allTasks";
     }
 
     @GetMapping("/delete-task/{id}")
     public String showDelete(Model model, @PathVariable long id){
-        return "deleteQuestion";
+        Task task = taskService.getTaskById(id);
+        taskService.deleteTask(task);
+        return "redirect:../../leader/allTasks";
     }
 }

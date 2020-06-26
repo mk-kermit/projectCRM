@@ -2,7 +2,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Strona startowa admina</title>
+    <title>Zmiana statusu zadania</title>
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
