@@ -14,16 +14,8 @@
 </div>
 <form:form method="POST" modelAttribute="task">
     <div class="register">
-        <label>Tytuł:</label></br>
-        <input class="textfield" type="text"/></br>
-        <label>Opis:</label></br>
-        <input class="textfield" type="text"/></br>
-        <label>Do kogo przypisać:</label></br>
-        <select name = "user_id" class="userList">
-            <c:forEach var="user" items="${userList}">
-                <option value="${user.id}">${user.firstName} ${user.surname}</option>
-            </c:forEach>
-        </select></br>
+        <span><form:label path="description">Opis:</form:label>
+        <input class="textfield" type="text"/></span>
         </br><input class="button" type="submit" value="Zmień">
     </div>
 </form:form>

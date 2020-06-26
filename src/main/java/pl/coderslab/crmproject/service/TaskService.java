@@ -7,7 +7,7 @@ import java.util.List;
 public interface TaskService {
     Task findTaskByTitle(String title);
 
-    List<Task> findForUserId(Long id);
+    List<Task> findTasksByUserId(Long id);
 
     void saveTask(Task task);
 
@@ -18,4 +18,6 @@ public interface TaskService {
     void updateDescription(Task task, String description);
 
     void deleteTask(Task task);
+
+    void changeTaskStatus(Task task, String status);
 }

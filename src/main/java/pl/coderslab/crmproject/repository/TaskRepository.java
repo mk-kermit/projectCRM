@@ -11,8 +11,6 @@ import java.util.List;
 public interface TaskRepository extends JpaRepository<Task, Long> {
     Task findByTitle(String title);
 
-    Task findById(long id);
-
-    @Query(value = "SELECT * FROM tasks INNER JOIN users_tasks on tasks.id = users_tasks.tasks_id WHERE users_tasks.user_id = ?1", nativeQuery = true)
+    @Query(value = "SELECT * FROM tasks INNER JOIN users_tasks ON tasks.id = users_tasks.tasks_id WHERE users_tasks.user_id = ?1", nativeQuery = true)
     List<Task> findTasksByUserId(Long id);
 }

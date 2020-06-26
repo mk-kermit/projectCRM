@@ -19,6 +19,11 @@
                 <td>${task.title}</td>
                 <td>${task.description}</td>
                 <td>${task.status}</td>
+                <td>
+                    <button class="btn-link">
+                        <a href="/loged/change-status/${task.id}">Edycja statusu zadania</a>
+                    </button>
+                </td>
             </tr>
         </c:forEach>
     </table>

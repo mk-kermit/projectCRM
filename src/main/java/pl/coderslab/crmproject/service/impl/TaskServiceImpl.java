@@ -41,7 +41,7 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    public List<Task> findForUserId(Long id) {
+    public List<Task> findTasksByUserId(Long id) {
         return taskRepository.findTasksByUserId(id);
     }
 
@@ -66,5 +66,12 @@ public class TaskServiceImpl implements TaskService {
     public void deleteTask(Task task) {
         taskRepository.delete(task);
         log.info("Task with id {} has been deleted", task.getId());
+    }
+
+    @Override
+    public void changeTaskStatus(Task task, String status) {
+        task.setStatus(status);
+        taskRepository.save(task);
+        log.info("Task with id {} has changed his status", task.getId());
     }
 }

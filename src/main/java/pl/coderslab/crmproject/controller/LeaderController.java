@@ -59,23 +59,24 @@ public class LeaderController {
 
     @GetMapping("/edit-task/{id}")
     public String showEditTaskForm(Model model, @PathVariable long id) {
-        Task task = taskService.getTaskById(id);
-        model.addAttribute("task", task);
+        Task editTask = taskService.getTaskById(id);
+        model.addAttribute("task", editTask);
         return "leader/edit-task";
     }
 
     @PostMapping("/edit-task/{id}")
-    public String processUpdateTaskDescription(@PathVariable long id, @ModelAttribute @Validated Task task,
-                                        BindingResult bindingResult){
+    public String processUpdateTaskDescription(@PathVariable long id, @ModelAttribute(name = "task") @Validated Task task,
+                                               BindingResult bindingResult){
         if(bindingResult.hasErrors()){
             return "leader/edit-task";
         }
-        taskService.updateDescription(taskService.getTaskById(id), task.getDescription());
+        taskService.updateDescription(task, task.getDescription());
+        taskService.saveTask(task);
         return "redirect:../../leader/allTasks";
     }
 
     @GetMapping("/delete-task/{id}")
-    public String showDelete(Model model, @PathVariable long id){
+    public String showDelete(@PathVariable long id){
         Task task = taskService.getTaskById(id);
         taskService.deleteTask(task);
         return "redirect:../../leader/allTasks";
