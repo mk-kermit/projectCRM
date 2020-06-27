@@ -69,9 +69,18 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    public void changeTaskStatus(Task task, String status) {
-        task.setStatus(status);
-        taskRepository.save(task);
+    public void changeTaskStatus(Task task, Task baseTask) {
+        baseTask.setStatus(task.getStatus());
+        taskRepository.save(baseTask);
         log.info("Task with id {} has changed his status", task.getId());
     }
+
+    @Override
+    public void saveEditTask(Task task, Task baseTask) {
+        baseTask.setDescription(task.getDescription());
+        taskRepository.save(baseTask);
+        log.info("Task with id {} has changed description");
+    }
+
+
 }

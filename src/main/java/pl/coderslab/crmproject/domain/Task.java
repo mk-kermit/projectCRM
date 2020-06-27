@@ -5,6 +5,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import pl.coderslab.crmproject.util.validation.AddValidator;
+import pl.coderslab.crmproject.util.validation.EditDescriptionValidator;
 import pl.coderslab.crmproject.util.validation.EditTitleValidator;
 import pl.coderslab.crmproject.util.validation.EditValidator;
 
@@ -30,11 +31,12 @@ public class Task {
     private String title;
 
     @Column(name = "task_description")
-    @NotNull(groups = {AddValidator.class, EditValidator.class})
-    @NotEmpty(groups = {AddValidator.class, EditValidator.class})
+    @NotNull(groups = {AddValidator.class, EditDescriptionValidator.class})
+    @NotEmpty(groups = {AddValidator.class, EditDescriptionValidator.class})
     private String description;
 
     @Column(name = "task_status", length = 20)
+    @NotEmpty(groups = {AddValidator.class, EditValidator.class})
     private String status;
 
     @Transient

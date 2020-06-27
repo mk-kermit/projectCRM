@@ -15,7 +15,7 @@
 <form:form method="POST" modelAttribute="task">
     <div class="register">
         <span><form:label path="description">Opis:</form:label>
-        <input class="textfield" type="text"/></span>
+        <form:input path="description" class="textfield" type="text"/></span>
         </br><input class="button" type="submit" value="Zmień">
     </div>
 </form:form>

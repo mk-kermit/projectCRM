@@ -15,9 +15,11 @@ public interface TaskService {
 
     Task getTaskById(Long id);
 
+    void saveEditTask(Task task, Task baseTask);
+
     void changeDescription(Task task, String description);
 
     void deleteTask(Task task);
 
-    void changeTaskStatus(Task task, String status);
+    void changeTaskStatus(Task task, Task baseTask);
 }

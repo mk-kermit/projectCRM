@@ -10,14 +10,12 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import pl.coderslab.crmproject.domain.Task;
-import pl.coderslab.crmproject.domain.User;
 import pl.coderslab.crmproject.enumeration.Status;
 import pl.coderslab.crmproject.security.CurrentUser;
 import pl.coderslab.crmproject.service.TaskService;
 import pl.coderslab.crmproject.service.UserService;
 import pl.coderslab.crmproject.util.validation.EditValidator;
 
-import javax.validation.groups.Default;
 import javax.servlet.http.HttpSession;
 import java.util.Arrays;
 import java.util.List;
@@ -51,7 +49,7 @@ public class UserController {
 
 
     @GetMapping("/myTasks")
-    public String showMyTasks(User user, Model model) {
+    public String showMyTasks(Model model) {
         model.addAttribute("myTasks", taskService.findTasksByUserId(currentUser.getUser().getId()));
         return "loged/myTasks";
     }
@@ -60,19 +58,20 @@ public class UserController {
     public String changeStatusForm(@PathVariable Long id, Model model) {
         Task task = taskService.getTaskById(id);
         model.addAttribute("task", task);
+        model.addAttribute("baseTask", task);
         return "loged/change-status";
     }
 
     @PostMapping("/change-status/{id}")
-    public String processChangeStatusForm(@ModelAttribute @Validated({Default.class, EditValidator.class})
-                                                      Task task,
+    public String processChangeStatusForm(@ModelAttribute @Validated({EditValidator.class})
+                                                      Task task, Model model,
                                           BindingResult bindingResult, HttpSession session) {
         if(bindingResult.hasErrors()){
             return "loged/myTasks";
         }
         Task baseTask = (Task) session.getAttribute("baseTask");
-        String status = task.getStatus();
-        taskService.changeTaskStatus(baseTask, status);
-        return "redirect:../../loged/myTasks";
+        taskService.changeTaskStatus(task, baseTask);
+        model.addAttribute("myTasks", taskService.findTasksByUserId(currentUser.getUser().getId()));
+        return "redirect:/loged/myTasks";
     }
 }

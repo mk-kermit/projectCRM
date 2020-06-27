@@ -15,7 +15,7 @@ import pl.coderslab.crmproject.security.CurrentUser;
 import pl.coderslab.crmproject.service.TaskService;
 import pl.coderslab.crmproject.service.UserService;
 import pl.coderslab.crmproject.util.validation.AddValidator;
-import pl.coderslab.crmproject.util.validation.EditValidator;
+import pl.coderslab.crmproject.util.validation.EditDescriptionValidator;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.groups.Default;
@@ -66,7 +66,7 @@ public class LeaderController {
     }
 
     @GetMapping("/edit-task/{id}")
-    public String showEditTaskForm(Model model, @PathVariable long id) {
+    public String showEditTaskForm(Model model, @PathVariable Long id) {
         Task task = taskService.getTaskById(id);
         model.addAttribute("task", task);
         model.addAttribute("baseTask", task);
@@ -74,15 +74,14 @@ public class LeaderController {
     }
 
     @PostMapping("/edit-task/{id}")
-    public String processUpdateTaskDescription(@PathVariable long id,
-                                               @ModelAttribute(name = "task") @Validated({Default.class, EditValidator.class})
+    public String processUpdateTaskDescription(@Validated({Default.class, EditDescriptionValidator.class})
                                                        Task task,
                                                BindingResult bindingResult, HttpSession session) {
         if (bindingResult.hasErrors()) {
             return "leader/edit-task";
         }
         Task baseTask = (Task) session.getAttribute("baseTask");
-        taskService.changeDescription(baseTask, task.getDescription());
+        taskService.saveEditTask(task, baseTask);
         return "redirect:/leader/allTasks";
     }
 
