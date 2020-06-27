@@ -64,7 +64,8 @@ public class UserController {
     }
 
     @PostMapping("/change-status/{id}")
-    public String processChangeStatusForm(@Validated({Default.class, EditValidator.class}) Task task,
+    public String processChangeStatusForm(@ModelAttribute @Validated({Default.class, EditValidator.class})
+                                                      Task task,
                                           BindingResult bindingResult, HttpSession session) {
         if(bindingResult.hasErrors()){
             return "loged/myTasks";

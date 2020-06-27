@@ -4,7 +4,7 @@
 <html>
 <head>
     <title>Lista wszystkich userów</title>
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
 <div class="top">

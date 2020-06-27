@@ -56,9 +56,9 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    public void updateDescription(Task task, String description){
+    public void changeDescription(Task task, String description){
         task.setDescription(description);
-        taskRepository.save(task);
+        taskRepository.changeDescriptionByTaskId(description, task.getId());
         log.info("Description has been updated");
     }
 

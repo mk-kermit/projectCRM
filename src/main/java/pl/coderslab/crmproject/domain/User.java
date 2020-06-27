@@ -2,6 +2,7 @@ package pl.coderslab.crmproject.domain;
 
 import lombok.*;
 import pl.coderslab.crmproject.util.validation.AddValidator;
+import pl.coderslab.crmproject.util.validation.EditPasswordValidator;
 import pl.coderslab.crmproject.util.validation.EditValidator;
 
 import javax.persistence.*;
@@ -26,8 +27,8 @@ public class User {
     private String username;
 
     @Column(name = "user_password", length = 60)
-    @NotNull(groups = {AddValidator.class, EditValidator.class})
-    @NotEmpty(groups = {AddValidator.class, EditValidator.class})
+    @NotNull(groups = {AddValidator.class, EditPasswordValidator.class})
+    @NotEmpty(groups = {AddValidator.class, EditPasswordValidator.class})
     private String password;
 
     @Column(name = "user_first_name", length = 60)
@@ -46,6 +47,6 @@ public class User {
     @Column(name = "user_role")
     private String role;
 
-    @OneToMany(fetch = FetchType.EAGER)
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Set<Task> tasks;
 }

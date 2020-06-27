@@ -16,7 +16,6 @@ import pl.coderslab.crmproject.util.validation.AddValidator;
 import pl.coderslab.crmproject.util.validation.EditValidator;
 
 import javax.servlet.http.HttpSession;
-import javax.validation.groups.Default;
 import java.util.Arrays;
 import java.util.List;
 
@@ -52,7 +51,7 @@ public class AdminController {
     }
 
     @PostMapping("/create-user")
-    public String processCreateUserForm(@Validated({Default.class, AddValidator.class}) User user, BindingResult bindingResult) {
+    public String processCreateUserForm(@Validated({AddValidator.class}) User user, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return "create-user";
         }
@@ -70,18 +69,18 @@ public class AdminController {
     }
 
     @PostMapping("/edit-user/{id}")
-    public String processUserEditionForm(@Validated({Default.class, EditValidator.class}) User user,
+    public String processUserEditionForm(@Validated({EditValidator.class}) User user,
                                          BindingResult bindingResult, HttpSession session) {
         if (bindingResult.hasErrors()) {
             return "admin/edit-user";
         }
         User baseUser = (User) session.getAttribute("baseUser");
         userService.saveEditUser(user, baseUser);
-        return "redirect:../../admin/userList";
+        return "redirect:/admin/userList";
     }
 
     @GetMapping("/delete/{id}")
-    public String deleteConfirmation(@PathVariable Long id){
+    public String showDelete(@PathVariable Long id){
         User user = userService.findById(id);
         userService.deleteUser(user);
         return "redirect:../../admin/userList";

@@ -5,6 +5,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import pl.coderslab.crmproject.util.validation.AddValidator;
+import pl.coderslab.crmproject.util.validation.EditTitleValidator;
 import pl.coderslab.crmproject.util.validation.EditValidator;
 
 import javax.persistence.*;
@@ -24,8 +25,8 @@ public class Task {
     private Long id;
 
     @Column(name = "task_title", length = 40)
-    @NotNull(groups = {AddValidator.class, EditValidator.class})
-    @NotEmpty(groups = {AddValidator.class, EditValidator.class})
+    @NotNull(groups = {AddValidator.class, EditTitleValidator.class})
+    @NotEmpty(groups = {AddValidator.class, EditTitleValidator.class})
     private String title;
 
     @Column(name = "task_description")

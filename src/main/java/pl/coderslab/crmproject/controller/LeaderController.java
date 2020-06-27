@@ -14,12 +14,17 @@ import pl.coderslab.crmproject.domain.User;
 import pl.coderslab.crmproject.security.CurrentUser;
 import pl.coderslab.crmproject.service.TaskService;
 import pl.coderslab.crmproject.service.UserService;
+import pl.coderslab.crmproject.util.validation.AddValidator;
+import pl.coderslab.crmproject.util.validation.EditValidator;
 
+import javax.servlet.http.HttpSession;
+import javax.validation.groups.Default;
 import java.util.ArrayList;
 import java.util.List;
 
 @Controller
 @AllArgsConstructor
+@SessionAttributes("baseTask")
 @RequestMapping("/leader")
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class LeaderController {
@@ -27,16 +32,17 @@ public class LeaderController {
     final TaskService taskService;
 
     @ModelAttribute("userList")
-    public List<User> getUsers(){
+    public List<User> getUsers() {
         return new ArrayList<>(userService.getEnableUsers());
     }
+
     @GetMapping("")
     public String leaderHome() {
         return "leader/homeLeader";
     }
 
     @GetMapping("/allTasks")
-    public String showAllTasks(Model model, @AuthenticationPrincipal CurrentUser currentUser){
+    public String showAllTasks(Model model, @AuthenticationPrincipal CurrentUser currentUser) {
         model.addAttribute("taskList", taskService.getAllTasks());
         return "leader/allTasks";
     }
@@ -49,7 +55,9 @@ public class LeaderController {
     }
 
     @PostMapping("/create-task")
-    public String processTaskForm(@ModelAttribute @Validated Task task, BindingResult bindingResult) {
+    public String processTaskForm(@ModelAttribute @Validated({Default.class, AddValidator.class})
+                                          Task task,
+                                  BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return "leader/create-task";
         }
@@ -59,26 +67,29 @@ public class LeaderController {
 
     @GetMapping("/edit-task/{id}")
     public String showEditTaskForm(Model model, @PathVariable long id) {
-        Task editTask = taskService.getTaskById(id);
-        model.addAttribute("task", editTask);
+        Task task = taskService.getTaskById(id);
+        model.addAttribute("task", task);
+        model.addAttribute("baseTask", task);
         return "leader/edit-task";
     }
 
     @PostMapping("/edit-task/{id}")
-    public String processUpdateTaskDescription(@PathVariable long id, @ModelAttribute(name = "task") @Validated Task task,
-                                               BindingResult bindingResult){
-        if(bindingResult.hasErrors()){
+    public String processUpdateTaskDescription(@PathVariable long id,
+                                               @ModelAttribute(name = "task") @Validated({Default.class, EditValidator.class})
+                                                       Task task,
+                                               BindingResult bindingResult, HttpSession session) {
+        if (bindingResult.hasErrors()) {
             return "leader/edit-task";
         }
-        taskService.updateDescription(task, task.getDescription());
-        taskService.saveTask(task);
-        return "redirect:../../leader/allTasks";
+        Task baseTask = (Task) session.getAttribute("baseTask");
+        taskService.changeDescription(baseTask, task.getDescription());
+        return "redirect:/leader/allTasks";
     }
 
     @GetMapping("/delete-task/{id}")
-    public String showDelete(@PathVariable long id){
+    public String showDelete(@PathVariable long id) {
         Task task = taskService.getTaskById(id);
         taskService.deleteTask(task);
-        return "redirect:../../leader/allTasks";
+        return "redirect:/leader/allTasks";
     }
 }

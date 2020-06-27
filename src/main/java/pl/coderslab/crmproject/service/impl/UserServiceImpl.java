@@ -49,11 +49,11 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void saveEditUser(User user, User baseUser) {
-        user.setUsername(baseUser.getUsername());
-        user.setFirstName(baseUser.getFirstName());
-        user.setSurname(baseUser.getSurname());
-        user.setRole(baseUser.getRole());
-        userRepository.save(user);
+        baseUser.setUsername(user.getUsername());
+        baseUser.setFirstName(user.getFirstName());
+        baseUser.setSurname(user.getSurname());
+        baseUser.setRole(user.getRole());
+        userRepository.save(baseUser);
         log.info("User with id {} has been saved", user.getId());
     }
 

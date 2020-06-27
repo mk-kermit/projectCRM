@@ -4,7 +4,7 @@
 <html>
 <head>
     <title>Formularz dodawania zadania</title>
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
 <div class="top">

@@ -3,7 +3,7 @@
 <html>
 <head>
     <title>403</title>
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
     <h1>Dostęp zabroniony</h1>
